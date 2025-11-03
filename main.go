@@ -42,6 +42,5 @@ func main() {
 		msgs := b.Consume(topicName)
 		c.JSON(http.StatusOK, gin.H{"messages": msgs})
 	})
-
 	r.Run(":8080")
 }
