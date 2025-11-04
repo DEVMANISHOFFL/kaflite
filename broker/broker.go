@@ -12,7 +12,9 @@ func NewBroker() *Broker {
 
 func (b *Broker) CreateTopic(name string) {
 	if _, exists := b.Topics[name]; !exists {
-		b.Topics[name] = NewTopic(name)
+		t := NewTopic(name)
+		t.Messages = loadMessages(name)
+		b.Topics[name] = t
 	}
 }
 
@@ -22,9 +24,9 @@ func (b *Broker) Publish(topicName, msg string) {
 	}
 }
 
-func (b *Broker) Consume(topicName string) []string {
+func (b *Broker) Consume(topicName string) []Message {
 	if topic, exists := b.Topics[topicName]; exists {
 		return topic.Messages
 	}
-	return []string{}
+	return []Message{}
 }
